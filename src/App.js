@@ -15,19 +15,12 @@ Use fetch() or import Axios to roll through this json string.
 */
 
 
-
-
 class App extends React.Component {
   constructor(props)  {
     super(props);
     this.state = {
       value: "",
-      quotes: []
-
-      // {
-      //   quote: null,
-      //   author: null
-      // }
+      quotes: [],
     };
     // Handles here.
   }
@@ -46,6 +39,8 @@ class App extends React.Component {
         console.log('In FIRST THEN: ', typeof this.state.quotes);
 
         let quotesObj = response.data;
+        // // console.log('no4 quote: ', Object.entries(quotesObj)[0][1][4].quote )
+        // // console.log('no4 author: ', Object.entries(quotesObj)[0][1][4].author )
         // t.s.quotes is not an iterable object, so 
         // have to do this - push the bits to an array:
         const quoteEntries = Object.entries(quotesObj)[0][1];
@@ -57,71 +52,30 @@ class App extends React.Component {
         this.setState({quotes: quoteArr});
         console.log('What is this.state.quotes now: ', Array.isArray(this.state.quotes)
          +', [3]: ', this.state.quotes[3].quote );
-
-      } )
-     // .then(quotes =>  {
-        // let quotesObj = this.state.quotes;
-        // // console.log('quotesObj: ', quotesObj);
-        // // console.log('no4 quote: ', Object.entries(quotesObj)[0][1][4].quote )
-        // // console.log('no4 author: ', Object.entries(quotesObj)[0][1][4].author )
-        
-        // // t.s.quotes is not an iterable object, so 
-        // // have to do this - push the bits to an array:
-        // const quoteEntries = Object.entries(quotesObj)[0][1];
-        // for(quoAuth of quoteEntries ){ 
-        //   console.log('Quote: ', quoAuth.quote); 
-        //   console.log('Author: ', quoAuth.author); 
-        //   // Make this a fn, pull into then();
-        //   // Build these into mor controllable array,
-        //   // reveal in render()
-        //   // return quoAuth;
-        //   quoteArr.push(quoAuth);
-        // }
-        // this.setState({quotes: quoteArr});
-        // console.log('What is this.state.quotes now: ', Array.isArray(this.state.quotes)
-        //  +', [3]: ', this.state.quotes[19].quote 
-
-        //   );
-        //console.log('setState quote/s: ', this.state.quotes);
-   //   })
+      })
       .catch(err => console.log(err))
   }
 
-  
 
   render() {
-    // const obj = this.state.quotes;
-    // console.log('obj: ', obj);
-    // console.log('no4 quote: ', Object.entries(obj)[0][1][4].quote )
-    // console.log('no4 author: ', Object.entries(obj)[0][1][4].author )
-
-    // const allQuotesMounts = allQuotes.map(x=>x)
-    // if(obj.length>0)  {
-    //   for(let i of obj){console.log(i); }
-    // }
     let quotesRen = this.state.quotes;
-
-   // const { quote, author } = this.props;
-
     console.log(' quotes is an array? ', Array.isArray(this.state.quotes) +
       ', No 17 in render: ', quotesRen[17] )
-//    const qMap = quotes.map(eachQ => console.log(eachQ.quote));
+
     return (
       <div className="App">
-        <h1>Here:  </h1>
+        <h1>Here: </h1>
+        <div className="container">
+          {this.state.quotes.map((quote, index) => (
+            <div className="quoteCont" key={'q'+index}>
+              <p>{index+1}] Quote: {quote.quote}<br />
+              Author: {quote.author}</p>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
 }
-
-
-// class ThisQuote extends React.Component {
-//   render()  {
-//     let {quotes} = this.props
-//     return(
-//       <p> thisQuote is: {quotes[2]}</p>
-//     )
-//   }
-// }
 
 export default App;
