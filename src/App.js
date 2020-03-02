@@ -29,31 +29,19 @@ class App extends React.Component {
 
 
   componentDidMount() {
-    const quoteJsonStr = 'https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json';
+    const jsonStr = 'https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json';
 
     let quoAuth = '';
     let quoteArr = [];
 
-    axios.get(quoteJsonStr)
+    axios.get(jsonStr)
       .then(response => {
-        console.log('response data first: ', typeof response.data )
-       // this.setState({quotes: response.data})
-        console.log('In FIRST THEN: ', typeof this.state.quotes);
+        console.log('response data first: ', response.data )
+        
+        this.setState({quotes: response.data.quotes});
 
-        let quotesObj = response.data;
-        console.log('no4 quote: ', Object.entries(quotesObj)[0][1][4].quote )
-        // // console.log('no4 author: ', Object.entries(quotesObj)[0][1][4].author )
-        // t.s.quotes is not an iterable object, so 
-        // have to do this - push the bits to an iterable array:
-        const quoteEntries = Object.entries(quotesObj)[0][1];
-        for(quoAuth of quoteEntries ){ 
-          console.log('Quote: ', quoAuth.quote); 
-          console.log('Author: ', quoAuth.author); 
-          quoteArr.push(quoAuth);
-        }
 
-        this.setState({quotes: quoteArr});
-
+        console.log('no4 quote: ', this.state.quotes[4] );
         console.log('Is this.state.quotes an array: ', Array.isArray(this.state.quotes) );
       })
       .catch(err => console.log(err))
@@ -64,9 +52,32 @@ class App extends React.Component {
   render() {
     let allQuotes = this.state.quotes;
 
+    const {quote,author} = this.state;
+
     const randomizer = (max) => {
       return Math.floor(Math.random() * (max) )
     }
+
+    let randoNum = randomizer( allQuotes.length );
+
+
+    let thisRandomQuote='';
+    for (var keys in allQuotes[randoNum]) {
+      if (allQuotes[randoNum].hasOwnProperty(keys)) {
+        thisRandomQuote = 'TEST: '+allQuotes[randoNum][keys]+', key: ' +keys;
+        //return 'TEST: '+thisRandomQuote
+      }
+    }
+
+    // let thisRandomQuote = allQuotes[randoNum].map( (quote, index) => {
+    //   return(
+    //     <p>{quote}, by {author}</p>
+    //     );
+    // });
+
+
+
+    console.log('thisRandomQuote: ', thisRandomQuote );
 /*
     function AllQuotesMod(props) {
       return(
@@ -82,12 +93,12 @@ class App extends React.Component {
     }
 */
 
-    console.log('this.state.quotes at 85: ', typeof this.state.quotes[0] )
+    console.log('this.state.quotes at 85: ', this.state.quotes )
 
     function RandomQuote(props) {
       let randoNum = randomizer( allQuotes.length );
-      // const randQuote = allQuotes[randoNum];
       const randQuote = allQuotes[randoNum];
+      
 
       console.log('allQuotes.length: '+ allQuotes.length )
       // 102
@@ -98,9 +109,9 @@ class App extends React.Component {
            
           <div className="quoteCont">
             <p> 
-              Quote: {randQuote}
+              Quote: {thisRandomQuote}
               <br />
-              Author: xxxxxx 
+              Author: {author} 
             </p>
           </div> 
         </div>
@@ -108,8 +119,8 @@ class App extends React.Component {
     }
 
 
-    console.log(' quotes is an array? ', Array.isArray(this.state.quotes) +
-      ', No 17 in render: ', allQuotes[17] )
+    // console.log(' quotes is an array? ', Array.isArray(this.state.quotes) +
+    //   ', No 17 in render: ', allQuotes[17] )
 
     return (
       <div className="App">
