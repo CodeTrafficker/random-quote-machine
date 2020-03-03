@@ -30,8 +30,6 @@
 /* tablet and up adjustments: */
 @media only screen and (min-width: 600px) {
   .qrContent  {
-    height: 25vw;
-    min-height: 150px;
     padding: 30px;
   }
 }
