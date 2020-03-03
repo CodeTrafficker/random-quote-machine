@@ -1,0 +1,37 @@
+.qContainer {
+  margin: auto;
+}
+
+.qrContent  {
+  background: #5626C4;
+  color: #FACD3D;
+  border-radius: 0 2rem;
+  min-height: 350px;
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+
+.qrContent p  {
+  line-height: 2rem;
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-top: 0;
+}
+
+#quote-random {
+  background-color: #181818;
+}
+
+
+
+/* tablet and up adjustments: */
+@media only screen and (min-width: 600px) {
+  .qrContent  {
+    height: 25vw;
+    min-height: 150px;
+    padding: 30px;
+  }
+}
